@@ -11,20 +11,142 @@
 \usepackage{graphicx}
 \usepackage{float} 
 \usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{ulem}
+\usepackage{subfig}
+
+%行间距
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.2}
 
 \begin{document}
 \maketitle
 
 \section*{Exercise 1  Properties of Independent Variables}
+
 \subsection*{1}
-    By definition of expectation of a continuous random variable: 
-        $E[X] = \int_{\Omega} X(\omega)dP(\omega)$ \\
-    Then,
+By definition of expectation of a continuous random variable:\\
+\begin{align*}
+    \mathbf{E}_{X} &= \int_{\Omega} X(\omega)dP(\omega), where\, x,y,x+y\in\Omega \\
+\end{align*}
+Therefore, \\
+\begin{align*}
+    \mathbf{E}_{X,Y}[x+y] &= \iint (x+y)f(x,y) dxdy \text{, f is the probability density function of x,y}\\
+    &= \iint xf(x,y) dxdy +\iint yf(x,y) dxdy \\
+    &= \mathbf{E}_{X}[x]+\mathbf{E}_{Y}[y] \quad \text{Q.E.D.}\\
+\end{align*}
+
+
+\subsection*{2}
+By definition of expectation of a continuous random variable:\\
+\begin{align*}
+    \mathbf{E}_{X} &= \int_{\Omega} X(\omega)dP(\omega), where\, x,y,xy\in\Omega \\
+\end{align*}
+Therefore, \\
+\begin{align*}
+    \mathbf{E}_{X,Y}[xy] = \iint xy f(x,y) dxdy \text{, f is the probability density function of x,y}\\
+    \text{Because X and Y are independent from each other, we have}\quad
+    f(x,y)  &= f(x)f(y)\\
+\end{align*}
+Then we have \\
+\begin{align*}
+ \mathbf{E}_{X,Y}[xy] &= \iint xyf(x)f(y)dxdy\\
+ &= \int xf(x)dx\int yf(y)dy\\
+ &= \mathbf{E}_{X}\mathbf{E}_{Y} \quad \text Q.E.D.\\
+\end{align*}
+
+\subsection*{3}
+By definition of convariance:\\
+\begin{align*}
+    cov[x,y] &= \mathbf{E}_{X,Y}[x-\mathbf{E}_{X}[x])(y-\mathbf{E}_{Y}[y])]\\
+\end{align*}
+Therefore, \\
+\begin{align*}
+     cov[x,y] &= \mathbf{E}[xy-y\mathbf{E}_{X}[x]-x\mathbf{E}_{Y}[y]+\mathbf{E}_{X}\mathbf{E}_{Y}]\\ 
+\end{align*}
+From the proof mentioned in 1.1,1.2:\\
+\begin{align*}
+ \mathbf{E}_{X,Y}[xy]&=\mathbf{E}_{X}\mathbf{E}_{Y} \quad \text (1)\\
+\mathbf{E}_{X,Y}[x+y] &= \mathbf{E}_{X}[x]+\mathbf{E}_{Y}[y] \quad \text (2)\\
+\end{align*}
+we have 
+\begin{align*}
+ cov[x,y] &= \mathbf{E}[xy]-\mathbf{E}[\mathbf{E}_{X}[x]y]-\mathbf{E}[\mathbf{E}_{Y}[y]x]+\mathbf{E}[\mathbf{E}_{X}\mathbf{E}_{Y}]\\
+ &= \mathbf{E}_{X,Y} - \mathbf{E}_{X}\mathbf{E}_{Y} -\mathbf{E}_{Y}\mathbf{E}_{X} + \mathbf{E}_{X,Y} \\
+ &= \mathbf{E}_{X,Y}-  \mathbf{E}_{X}\mathbf{E}_{Y}\\
+ &=0  \quad \text Q.E.D.\\ 
+\end{align*}
+
 
 \section*{Exercise 2  Beta Priors}
+\subsection*{1}
+\begin{align*}
+    B(a,b) &= \int_{0}^{1} x^{a-1} (1-x)^{b-1} dx \text{, where } a,b \geq 1\\
+    \text{Use Integration by substitution,}\\
+    &=\dfrac{1}{a}\int_{0}^{1}(1-x)^{b-1} d(x^a)\\
+    \text{Use Integration by parts,}\\
+    &=(x^{a-1}(1-x)^{b-1})\Big|_{0}^{1}-\dfrac{1}{b}\int_{0}^{1} x^{a-1}d(1-x)^b\\
+    &=0 + \dfrac{1}{b}\int_{0}^{1} x^{a-1} dx^b                                \\
+    &=\int_{0}^{1} x^{a-1}x^{b-1}dx\\
+    &=\int_{0}^{1} x^{a+b-2}dx\\
+    &=\dfrac{1}{a+b-1} x^{a+b-1}\Big|_{0}^{1}\\
+    &=\dfrac{1}{a+b-1}(1-0)\\
+    &a+b-1 \geq 1\text{, given } a,b\geq 1\\
+    &\text{Therefore, } \dfrac{1}{a+b-1}\in (0,1] \quad \text{Q.E.D.}\\
+\end{align*}
 
+\subsection*{2}
+    First of all ,to prove $Beta(x|a,b)$ is a valid probability distribution, we 
+    need to prove:\\
+    \begin{align*}
+        &(1)\quad \forall x\in[0,1], Beta(x|a,b) > 0\\
+        &(2)\quad \int_{0}^{1}Beta(x|a,b) = 1\\
+    \end{align*}
+    Proof of (1):\\
+    \begin{align*}
+        &Beta(x|a,b) =\dfrac{1}{B(a,b)}x^{a-1}(1-x)^{b-1}\\
+        &\text{Also from 2.1, } B(a,b) = \dfrac{1}{a+b-1} \\ 
+        &\text{Therefore, } Beta(x|a,b) =(a+b-1)x^{a-1}(1-x)^{b-1}\\
+        &\text{Since } a,b \geq 1\\
+        &\text{Then }a+b-1 \geq 1 \geq 0\\
+        &\text{Because } x\in[0,1]\\
+        &\forall m \in \mathcal{R} \quad x^{m}>0   \\
+        &\text{(except for 0, where }0^0 \text{ can be defined as 1 or remain undefined)}\\
+        &\text{Hence } x^{a-1}>0,\,(1-x)^{b-1} >0\\
+        &\text{Therefore, }Beta(x|a,b) = (a+b-1)x^{a-1}(1-x)^{b-1} \geq 0 
+        \text{ because 3 multipliers are all non-negative. }\\
+    \end{align*}
+    Proof of (2):\\
+    According to Exercise 2.1,
+    \begin{align*} 
+    \int_{0}^{1}Beta(x|a,b) &= \dfrac{1}{B(a,b)}\int_{0}^{1}x^{a-1}(1-x)^{b-1}dx\\
+    &\text{ because }\dfrac{1}{B(a,b)}\text{ is a constant according to 2.1}\\
+    &= \dfrac{1}{a+b-1}* (a+b-1)\\
+    &=1\\
+    \end{align*}
+    Therefore, the integral of PDF $Beta(x|a,b)$ is equal to 1.\\
+    Hence this PDF is a valid probability distribution.\\\\
+
+    Secondly, we need to prove $Beta(x|a,b)$ is well defined.\\
+    Because $B(a,b)$ (which is the denominator) is larger than 1, the only potential singular point for $Beta(x|a,b)$ is when a = 1, x = 0 or b = 1, x = 1 which makes a $0^0$.\\
+    However, usually $0^0$ can be defined as 1.\\
+    Hence this PDF is a well defined probability distribution.\\
+
+    From the proofs above, we can say that $Beta(x|a,b)$ is a well defined and valid probability distribution.\\
+
+
+\subsection*{3}
+    By definition of Gamma function and Beta function by Gamma function,
+\begin{align*}
+    \text{LEFT} &= \dfrac{\Gamma(a+1)\Gamma(b)}{\Gamma(a+b+1)}\\
+    &= \dfrac{a\Gamma(a)\Gamma(b)}{(a+b)\Gamma(a+b)}\\
+    &= \dfrac{a}{a+b}\dfrac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}\\
+    &=\text{RIGHT} \quad \text{Q.E.D.}\\
+\end{align*}
 
 \section*{Exercise 3  Coin Flips in Generality}
+\subsection*{1}
 
 
 \section*{Exercise 4  Noisy Coin Flips}
